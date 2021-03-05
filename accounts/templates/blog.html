@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% block javascript %}
+<script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+<script>
+	$('body').on('click', '.like_btn', function (event) {
+		var id = this.getAttribute('data-post-id');
+		$(this).toggleClass('is-active');
+		$.ajax({
+			url: '/blog/like',
+			data: {
+				'id': id,
+			},
+			dataType: 'json',
+			success: function (data) {
+				$('.like_count' + id).html(data.like_no);
+
+			}
+		});
+	});
+</script>
+{% endblock %}
+{% block contents %}
+{% load static %}
+    <main style="margin-top:200px">
+        <!--? Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center" style="box-shadow:inset 0 0 0 2000px rgba(255, 0, 157, 0.37);">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2 style="color: white;">Blog </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--? Hero Area End-->
+        <!--================Blog Area =================-->
+        <section class="blog_area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                    
+                        <div class="blog-posts infinite-container">
+                            <div class="content-wrap" style="margin-top: 0px;">
+                                <div class="entry-header  text-center">
+                                    <div class="posted-date">
+                                        {% now "jS F Y " %}
+                                    </div><!-- .posted-date -->
+                
+                                    <h2 class="entry-title" style="color: black;">POSTS</h2>
+                
+                                </div><!-- .entry-header -->
+                            </div>
+                            <br>
+                            {% for post in posts %}
+                            <div class="single-post infinite-item">
+                                <div class="image-wrapper"><img src="{{ post.image.url  }}" alt="Blog Image"></div>
+    
+                                <div class="icons">
+                                    <div class="left-area">
+                                        <a class="btn caegory-btn" ><b  style="color: white;">by Admin</b></a>
+                                    </div>
+                                    <ul class="right-area social-icons">
+                                        
+                                        <li><a href="javascript:void(0);" {% if request.user.is_authenticated %}
+                                                data-post-id="{{ post.id }}" {% else %} data-toggle="modal"
+                                                data-target="#loginModal" {% endif %}
+                                                class="{% if user.is_authenticated %}like_btn{% endif %} like-button {% if user in post.liker.all %}is-active{% endif %}">
+                                                <i class="far fa-heart  not-liked bouncy" style="font-size: 19px;"></i>
+                                                <i class="fas fa-heart is-liked bouncy" style="font-size: 19px;"></i>
+                                                <span class="like-overlay"></span>
+                                            </a></li>
+                                        <li class="like_count{{ post.id }}">{{ post.like_count }}</li>
+                                        <li><a href="javascript:void(0);" >
+                                            <i class="far fa-comment" style="font-size: 19px;"></i>
+                                            </span>
+                                        </a></li>
+                                        <li class="comment_count{{ post.id }}" >{{ post.comment_count }}</li>
+                                    </ul>
+                                </div>
+                                <p class="date"><em>{{ post.date_posted |date:"D d M Y" }}</em></p>
+                                <h3 class="title"><a href="{% url 'blog' post.id %}"><b class="light-color">{{ post.title }}</b></h3>
+                                    <p>{{ post.description | safe | slice:450 }}...<br>
+                                </p>
+                                
+                                <a class="btn read-more-btn" href="{% url 'blog' post.id %}"><b>READ MORE</b></a>
+                            </div><!-- single-post -->
+                            {% endfor %}
+                            <!-- row -->
+                        </div><!-- blog-posts -->
+                        <div class="loading" style="display: none;">
+                            Loading...
+                          </div>
+                         
+                          {% if posts.has_next %}
+                            <a class="infinite-more-link" href="?page={{ posts.next_page_number }}">More</a>
+                          {% endif %}
+                    </div><!-- col-lg-4 -->
+                    <div class="col-lg-4 ">
+                            <div class="blog_right_sidebar">
+                                <aside class="single_sidebar_widget search_widget">
+                                    <form action="/blog/" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <div class="input-group mb-3">
+                                                <input type="text" name="q" class="form-control" placeholder='Search Keyword'
+                                                    onfocus="this.placeholder = ''"
+                                                    onblur="this.placeholder = 'Search Keyword'" required>
+                                                <div class="input-group-append">
+                                                    <button class="btns" type="button"><i class="ti-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                            type="submit">Search</button>
+                                    </form>
+                                </aside>
+    
+                                
+                                <aside class="single_sidebar_widget popular_post_widget">
+                                    <h3 class="widget_title">Recent Post</h3>
+                                    {% for post in latest_posts %}
+                                    <div class="media post_item">
+                                        <div class="l-post-image" style="height: 90PX; max-width: 90px;"><img src="{{ post.image.url }}" alt="Category Image" style="height: 100%;object-fit: cover;"></div>
+                                        <div class="media-body">
+                                            <a href="{% url 'blog' post.id %}">
+                                                <h3>{{ post.title }}</h3>
+                                            </a>
+                                            <p>{{ post.date_posted | date }}</p>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                  
+                                    
+                                </aside>
+                             
+    
+                                <aside class="single_sidebar_widget instagram_feeds">
+                                    <h4 class="widget_title">Photos</h4>
+                                    <div class="gallery_area" style="margin-top: -120px;">
+								
+                                        <div class="container-fluid p-0" style="margin-top: 10px;">
+                                            <div class="row no-gutters ">
+                                                {% for album in albums %}
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="single_photography">
+                                                      <div class="thumb"   data-toggle="modal" data-target=".bd-example-modal-lg">
+                                                      <a  href="{{ album.image.url }}" class="img-pop-up ">
+                                                          <img src="{{ album.image.url }}" style='height:100%;object-fit:cover;' alt="">
+                                                      
+                                                      </a>
+                                                      </div>
+                                                      
+                                                  </div>
+                                                  </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aside>
+    
+    
+                                <aside class="single_sidebar_widget newsletter_widget">
+                                    <h4 class="widget_title">Newsletter</h4>
+    
+                                    <form class="form" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <input type="email" id="email-input1" class="form-control" onfocus="this.placeholder = ''"
+                                                onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                                        </div>
+                                        <button id="subscribe" class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                            type="submit">Subscribe</button>
+                                    </form>
+                                </aside>
+                                <div class="sidebar-section advertisement-area">
+                                    <h4 class="title"><b class="light-color">Advertisement</b></h4>
+                                    <a class="advertisement-img" href="#">
+                                        <img src="{% static 'assets/img/ad.jpg' %}" style=" height: 450px;" alt="Advertisement Image">
+                                       
+                                    </a>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================Blog Area =================-->
+    </main>
+{% endblock %}

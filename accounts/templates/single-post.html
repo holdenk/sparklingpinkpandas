@@ -1,0 +1,400 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% load static %}
+      <main style="margin-top: 170px;">
+     
+      
+      <!--================Blog Area =================-->
+      <section class="blog_area single-post-area section-padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-8 col-md-12">
+                  <div class="blog-posts">
+      
+                     <div class="single-post">
+                        <div class="post-author">
+                           <div class="author-image"><img src="{% static 'assets/img/logo.png' %}" alt="Autohr Image">
+                           </div>
+      
+                           <div class="author-info">
+                              <h4 class="name"><b class="light-color">by Admin</b></h4>
+      
+                              <p>{{ post.title }}</p>
+      
+                              <ul class="social-icons">
+                                 <div class="footer-social">
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.facebook.com/SparklingPinkPandas/?_rdc=1&_rdr"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://www.youtube.com/channel/UCP71aXbyq56Ynquxq3Gfovw"><i class="fab fa-youtube"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                </div>
+                              </ul><!-- right-area -->
+      
+                           </div><!-- author-info -->
+                        </div><!-- post-author -->
+                        <div class="image-wrapper"><img src="{{ post.image.url }}" alt="Blog Image"></div>
+      
+                        <div class="icons">
+                           <div class="left-area">
+                              <a class="btn caegory-btn" href="#"><b style="color: white;">by Admin</b></a>
+                           </div>
+                           <ul class="right-area social-icons">
+                              <li><a  data-toggle="modal"
+                                 data-target="#shareModal" ><i class="fas fa-share-square" style="font-size: 19px; "></i>Share</a>
+                              </li>
+                              <li><a href="javascript:void(0);" {% if request.user.is_authenticated %}
+                                      data-post-id="{{ post.id }}" {% else %} data-toggle="modal"
+                                      data-target="#loginModal" {% endif %}
+                                      class="{% if user.is_authenticated %}like_btn{% endif %} like-button {% if user in post.liker.all %}is-active{% endif %}">
+                                      <i class="far fa-heart  not-liked bouncy" style="font-size: 19px;"></i>
+                                      <i class="fas fa-heart is-liked bouncy" style="font-size: 19px;"></i>
+                                      <span class="like-overlay"></span>
+                                  </a></li>
+                              <li class="like_count{{ post.id }}">{{ post.like_count }}</li>
+                              <li><a href="javascript:void(0);" >
+                                  <i class="far fa-comment" style="font-size: 19px;"></i>
+                                  </span>
+                              </a></li>
+                              <li class="comment_count{{ post.id }}" >{{ post.comment_count }}</li>
+                          </ul>
+                        </div>
+                        <p class="date"><em>Monday, October 13, 2017</em></p>
+                        <p class="desc">{{ post.description | safe }}</p>
+      
+                        <!--ul>
+                              <li><a class="btn" href="#">design</a></li>
+                              <li><a class="btn" href="#">fashion</a></li>
+                           </ul-->
+      
+                     </div><!-- single-post -->
+                     <div class="content-area">
+                        <div class="post-comments">
+                           <h3 class="comments-title">Comments</h3>
+      
+                           <ol class="comment-list">
+                              {% for comment in post.coments.all %}
+                              <li class="comment" style="width: 100%;">
+                                 <div class="comment-body flex justify-content-between">
+                                    <figure class="comment-author-avatar">
+                                       <img src="{{ comment.user.user_details.image.url }}" alt="user">
+                                    </figure><!-- .comment-author-avatar -->
+      
+                                    <div class="comment-wrap" style="width: 100%;">
+                                       <div class="comment-author flex flex-wrap align-items-center"
+                                          style="width: 100%;">
+                                          <span class="fn">
+                                             <a href="#">{{ comment.user.username }}</a>
+                                          </span><!-- .fn -->
+      
+                                          <span class="comment-meta">
+                                             <a href="#">{{ comment.created_on | date }}</a>
+                                          </span><!-- .comment-meta -->
+      
+                                          <div class="reply">
+                                             <a href="javascript:void(0)" class="reply"
+                                                data-comment-id="{{ comment.id }}">Reply</a>
+                                          </div><!-- .reply -->
+                                       </div><!-- .comment-author -->
+      
+                                       <p style="width: 100%; min-height: 80px;">{{ comment.comment_text }}</p>
+      
+                                    </div><!-- .comment-wrap -->
+                                 </div><!-- .comment-body -->
+                                 <div id="reply-box{{ comment.id }}">
+                                 {% for reply in comment.rplies.all %}
+                                 <br>
+                                 <br>
+                                 <div class="reply-body flex justify-content-between"
+                                    style="margin-top: -10px;margin-left: 16%; width: 80%;">
+                                    <figure class="comment-author-avatar">
+                                       <img src="{{ reply.user.user_details.image.url }}" alt="user">
+                                    </figure><!-- .comment-author-avatar -->
+      
+                                    <div class="comment-wrap" style="width: 100%;">
+                                       <div class="comment-author flex flex-wrap align-items-center"
+                                          style="width: 100%;">
+                                          <span class="fn">
+                                             <a href="#">{{ reply.user.username }}</a>
+                                          </span><!-- .fn -->
+      
+                                          <span class="comment-meta">
+                                             <a href="#">{{ reply.created_on | date }}</a>
+                                          </span><!-- .comment-meta -->
+      
+                                       </div><!-- .comment-author -->
+      
+                                       <p style="width: 100%;">{{ reply.reply_text }}</p>
+      
+                                    </div><!-- .comment-wrap -->
+                                 </div><!-- .reply-body -->
+                                 <br>
+                                 {% endfor %}
+                              </div>
+                                 
+                              </li><!-- .comment -->
+                              <div id="reply_input{{ comment.id }}" style="display:none;width: 100%;">
+      
+                                 <div class="comment-form" style="margin-top: 20px;" >
+                                    <div class="row">
+                                       <div class="col-8">
+                                          <input type="text" id="reply-input{{ comment.id }}" cols="6" placeholder="Leave a reply">
+                                       </div>
+                                       <input style="margin-top: 0px; width: 100px; height: 57px;"
+                                       {% if request.user.is_authenticated %}
+                                       class="reply-button"  data-comment-id="{{ comment.id }}" {% else %} data-toggle="modal"
+                                       data-target="#loginModal" {% endif %}type="submit" value="reply">
+                                    </div>
+      
+                                 </div><!-- .comment-form -->
+      
+                              </div>
+                              {% endfor %}
+                           </ol><!-- .comment-list -->
+                        </div><!-- .post-comments -->
+      
+                        <div class="comments-form" style="margin-top: 40px;">
+                           <div class="comment-respond">
+                              <h3 class="comment-reply-title">Leave a reply</h3>
+                              {% if request.user.is_authenticated %}
+                              <div class="comment-form" style="margin-top: 40px;">
+                                 <textarea rows="18" id="comment-input" cols="6"
+                                    placeholder="Leave a reply"></textarea>
+                                 <input type="submit" class="comment_btn" value="comment">
+                              </div><!-- .comment-form -->
+                              {% else %}
+                              <button class="btn btn_1" data-toggle="modal" data-target="#loginModal">Login to
+                                 comment</button>
+                              {% endif %}
+                           </div><!-- .comment-respond -->
+                        </div><!-- .comments-form -->
+      
+      
+                     </div><!-- .content-area -->
+      
+                  </div><!-- blog-posts -->
+               </div>
+               <div class="col-lg-4">
+                  <div class="blog_right_sidebar">
+                      <aside class="single_sidebar_widget search_widget">
+                          <form action="/blog/" method="POST">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                  <div class="input-group mb-3">
+                                      <input type="text" name="q" class="form-control" placeholder='Search Keyword'
+                                          onfocus="this.placeholder = ''"
+                                          onblur="this.placeholder = 'Search Keyword'" required> 
+                                      <div class="input-group-append">
+                                          <button class="btns" type="button"><i class="ti-search"></i></button>
+                                      </div>
+                                  </div>
+                              </div>
+                              <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                  type="submit">Search</button>
+                          </form>
+                      </aside>
+
+                      
+                      <aside class="single_sidebar_widget popular_post_widget">
+                          <h3 class="widget_title">Recent Post</h3>
+                          {% for post in latest_posts %}
+                          <div class="media post_item">
+                              <div class="l-post-image" style="height: 90PX; max-width: 90px;"><img src="{{ post.image.url }}" alt="Category Image" style="height: 100%;object-fit: cover;"></div>
+                              <div class="media-body">
+                                  <a href="{% url 'blog' post.id %}">
+                                      <h3>{{ post.title }}</h3>
+                                  </a>
+                                  <p>{{ post.date_posted | date }}</p>
+                              </div>
+                          </div>
+                          {% endfor %}
+                        
+                          
+                      </aside>
+                   
+
+                      <aside class="single_sidebar_widget instagram_feeds">
+                          <h4 class="widget_title">Photos</h4>
+                          <div class="gallery_area" style="margin-top: -120px;">
+              
+                              <div class="container-fluid p-0" style="margin-top: 10px;">
+                                  <div class="row no-gutters ">
+                                      {% for album in albums %}
+                                      <div class="col-xl-4 col-md-4">
+                                          <div class="single_photography">
+                                            <div class="thumb"   data-toggle="modal" data-target=".bd-example-modal-lg">
+                                            <a  href="{{ album.image.url }}" class="img-pop-up ">
+                                                <img src="{{ album.image.url }}" style='height:100%;object-fit:cover;' alt="">
+                                            
+                                            </a>
+                                            </div>
+                                            
+                                        </div>
+                                        </div>
+                                      {% endfor %}
+                                  </div>
+                              </div>
+                          </div>
+                      </aside>
+
+
+                      <aside class="single_sidebar_widget newsletter_widget">
+                          <h4 class="widget_title">Newsletter</h4>
+
+                          <form class="form" method="POST">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                  <input type="email" id="email-input1" class="form-control" onfocus="this.placeholder = ''"
+                                      onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                              </div>
+                              <button id="subscribe" class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                  type="submit">Subscribe</button>
+                          </form>
+                      </aside>
+                  </div>
+          </div>
+            </div>
+         </div>
+      </section>
+      <!--================ Blog Area end =================-->
+   </main>
+   <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog " role="document">
+        <div class="modal-content">
+          <div class="modal-header newsletter-area">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body booking-form newsletter-area">
+            <div class="col-md-11 col-md-pull-7">
+              <div class="" style="width: 100%;">
+
+                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                <div class="addthis_inline_share_toolbox"></div>
+            
+               
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+   {% endblock %}
+   {% block javascript %}
+<script>
+	$('body').on('click', '.reply', function (event) {
+		var comment_id = this.getAttribute('data-comment-id');
+		var x = document.getElementById("reply_input" + comment_id);
+		x.style.display = "block";
+	})
+
+	$('body').on('click', '.like_btn', function (event) {
+		var id = this.getAttribute('data-post-id');
+		$(this).toggleClass('is-active');
+		$.ajax({
+			url: '/blog/like',
+			data: {
+				'id': id,
+			},
+			dataType: 'json',
+			success: function (data) {
+				$('.like_count' + id).html(data.like_no);
+
+			}
+		});
+	});
+	$('body').on('click', '.comment_btn', function (event) {
+		var id = '{{ post.id }}';
+		const commentInputDom = document.querySelector('#comment-input');
+		const comment = commentInputDom.value;
+		if (comment != "") {
+			$.ajax({
+				url: '/blog/comment',
+				data: {
+					'id': id,
+					'comment_text': comment,
+				},
+				dataType: 'json',
+				success: function (data) {
+					$('.comment_count' + id).html(data.comment_no);
+					$('.comment-list').append(
+						' <li class="comment" style="width: 100%;">' +
+						'<div class="comment-body flex justify-content-between">' +
+						'<figure class="comment-author-avatar">' +
+						'<img src="{{ user.user_details.image.url }}" alt="user">' +
+						'</figure>' +
+
+						'<div class="comment-wrap" style="width: 100%;">' +
+						'<div class="comment-author flex flex-wrap align-items-center" style="width: 100%;">' +
+						'<span class="fn">' +
+						'<a href="#">{{ request.user }}</a>' +
+						' </span >' +
+
+						'<span class="comment-meta">' +
+						'<a href="#">Now</a>' +
+						' </span>' +
+						'</div >' +
+						'<p style="width: 100%; min-height: 80px;">'+comment+'</p>' +
+						'</div >' +
+						'</div >' +
+						'</li > '
+					);
+					$('#loading').html('');
+					commentInputDom.value = "";
+				}
+			});
+		}
+	});
+	$('body').on('click', '.reply-button', function (event) {
+		var id = '{{ post.id }}';
+		var comment_id = this.getAttribute('data-comment-id');
+		const replyInputDom = document.querySelector('#reply-input' + comment_id);
+		const reply = replyInputDom.value;
+		if (reply != "") {
+			$.ajax({
+				url: '/blog/reply',
+				data: {
+					'id': id,
+					'comment_id': comment_id,
+					'reply_text': reply,
+				},
+				dataType: 'json',
+				success: function (data) {
+					$('.comment_count' + id).html(data.comment_no);
+					$('#reply-box' + comment_id).append(
+						'<br>'+
+						'<div class="reply-body flex justify-content-between"'+
+										'style="margin-top: 10px;margin-left: 16%; width: 80%;">'+
+										'<figure class="comment-author-avatar">'+
+											'<img src="{{ user.user_details.image.url }}" alt="user">'+
+										'</figure>'+
+
+										'<div class="comment-wrap" style="width: 100%;">'+
+											'<div class="comment-author flex flex-wrap align-items-center"'+
+												'style="width: 100%;">'+
+												'<span class="fn">'+
+													'<a href="#">{{ user }}</a>'+
+												'</span>'+
+
+												'<span class="comment-meta">'+
+													'<a href="#">Now</a>'+
+												'</span>'+
+
+											'</div>'+
+
+											'<p style="width: 100%;">'+reply+'</p>'+
+
+										'</div>'+
+									'</div>'
+					);
+					replyInputDom.value = ""
+				}
+			});
+		}
+	});
+
+</script>
+ <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60400c8098c5c5a8"></script>
+{% endblock %}

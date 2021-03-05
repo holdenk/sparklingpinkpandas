@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% load static %}
+<style>
+    .slider_area2{
+  background-image:url('/static/assets/img/image4.jpg');
+  box-shadow:inset 0 0 0 2000px rgba(255, 0, 157, 0.473);
+}
+</style>
+    <main style="margin-top: 200px;">
+        <!--? Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center slider_area2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2 style="color: white;">Events</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--? Hero Area End-->
+        <!--================Blog Area =================-->
+        <section class="blog_area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar">
+                            {% for event in events %}
+                            <article class="blog_item">
+                                <div class="blog_item_img">
+                                    <img class="card-img rounded-0" src="{{ event.image.url }}" alt="">
+                                    <a  class="blog_item_date">
+                                        <h3>{{ event.date |date:"d" }}</h3>
+                                        <p>{{ event.date |date:"M" }}</p>
+                                    </a>
+                                    <a style="margin-left: 100px;" class="blog_item_date">
+                                        <p>{{ event.date |time }} </p>
+                                    </a>
+                                </div>
+
+                                <div class="blog_details">
+                                    <a class="d-inline-block" href="single-blog.html">
+                                        <h2>{{ event.caption }}</h2>
+                                    </a>
+                                    <p>{{ event.description }}</p>
+                                    
+                                </div>
+                            </article>
+                            {% endfor %}
+                           
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                            <aside class="single_sidebar_widget search_widget">
+                                <form action="/blog/" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="q" class="form-control" placeholder='Search Keyword'
+                                                onfocus="this.placeholder = ''"
+                                                onblur="this.placeholder = 'Search Keyword'" required>
+                                            <div class="input-group-append">
+                                                <button class="btns" type="button"><i class="ti-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                        type="submit">Search</button>
+                                </form>
+                            </aside>
+      
+                            
+                            <aside class="single_sidebar_widget popular_post_widget">
+                                <h3 class="widget_title">Recent Post</h3>
+                                {% for post in latest_posts %}
+                                <div class="media post_item">
+                                    <div class="l-post-image" style="height: 90PX; max-width: 90px;"><img src="{{ post.image.url }}" alt="Category Image" style="height: 100%;object-fit: cover;"></div>
+                                    <div class="media-body">
+                                        <a href="{% url 'blog' post.id %}">
+                                            <h3>{{ post.title }}</h3>
+                                        </a>
+                                        <p>{{ post.date_posted | date }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                              
+                                
+                            </aside>
+                         
+      
+                            <aside class="single_sidebar_widget instagram_feeds">
+                                <h4 class="widget_title">Photos</h4>
+                                <div class="gallery_area" style="margin-top: -120px;">
+                    
+                                    <div class="container-fluid p-0" style="margin-top: 10px;">
+                                        <div class="row no-gutters ">
+                                            {% for album in albums %}
+                                            <div class="col-xl-4 col-md-4">
+                                                <div class="single_photography">
+                                                  <div class="thumb"   data-toggle="modal" data-target=".bd-example-modal-lg">
+                                                  <a  href="{{ album.image.url }}" class="img-pop-up ">
+                                                      <img src="{{ album.image.url }}" style='height:100%;object-fit:cover;' alt="">
+                                                  
+                                                  </a>
+                                                  </div>
+                                                  
+                                              </div>
+                                              </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </aside>
+      
+      
+                            <aside class="single_sidebar_widget newsletter_widget">
+                                <h4 class="widget_title">Newsletter</h4>
+      
+                                <form class="form" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input type="email" id="email-input1" class="form-control" onfocus="this.placeholder = ''"
+                                            onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                                    </div>
+                                    <button id="subscribe" class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                        type="submit">Subscribe</button>
+                                </form>
+                            </aside>
+                            <div class="sidebar-section advertisement-area">
+                                <h4 class="title"><b class="light-color">Advertisement</b></h4>
+                                <a class="advertisement-img" href="#">
+                                    <img src="{% static 'assets/img/ad.jpg' %}" style=" height: 450px;" alt="Advertisement Image">
+                                   
+                                </a>
+                            </div>
+                        </div>
+                </div>
+                </div>
+            </div>
+        </section>
+        <!--================Blog Area =================-->
+    </main>
+    {% endblock %}

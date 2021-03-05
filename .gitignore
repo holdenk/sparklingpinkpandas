@@ -130,3 +130,5 @@ dmypy.json
 
 # local db
 db.sqlite3
+# zips
+*.zip

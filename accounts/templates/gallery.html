@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% load static %}
+
+    <main style="margin-top: 200px;">
+        <!--? Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center slider_area2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2 style="color: white;">GALLERY</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--? Hero Area End-->
+        <!--================Blog Area =================-->
+        <section class="section">
+            <div class="">
+              <div class="gallery_area" style="margin-top: -150px;">
+                  
+    
+                  <div class="container-fluid p-0" style="margin-top: -60px;">
+                      <div class="row no-gutters justify-content-center" style="margin-left: 20px;">
+                        {% for album in albums %}
+                        <div class="col-xl-4 col-md-4" style="margin-top: 10px; ">
+                            <div class="single_photography">
+                                <div class="thumb" data-toggle="modal" data-target=".bd-example-modal-lg">
+                                    <a href="{{ album.image.url }}" class="img-pop-up " style="height: 400px;">
+                                        <img src="{{ album.image.url }}" style='height:100%;object-fit:cover; width: 97%;'
+                                            alt="">
+
+                                    </a>
+                                </div>
+
+                            </div>
+                       </div>
+                        {% endfor %}
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </section>
+        <div class="video-area mb-100">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                    <div class="video-wrap">
+                        <div class="play-btn "><a class="popup-video" href="https://www.youtube.com/watch?v=fGy0Sye3ZUQ"><i class="fas fa-play"></i></a></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--================Blog Area =================-->
+    </main>
+{% endblock %}
