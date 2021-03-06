@@ -134,3 +134,5 @@ db.sqlite3
 *.zip
 # db config
 my.cnf
+# Copied files
+staticfiles/
