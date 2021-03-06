@@ -11,7 +11,7 @@ class EventAdmin(admin.ModelAdmin):
         for email in emails:
             print(obj.image.url)
             print('test admin:'+email.email)
-            subject, from_email, to = 'New Event:' + obj.caption , 'sparklingspinkpandas@gmail.com', email.email
+            subject, from_email, to = 'New Event:' + obj.caption , 'sppscooters@gmail.com', email.email
             html_content = "<div style='width:100%; text-align:left'> <h2>Sparkling <span style='COLOR:pink'> Pink </span> Pandas</h2><div style='text-align:left'><h3>"+ obj.caption +"</h3><p>"+ obj.description +"</h3><h2> Date<br>"+ str(obj.date) +"</h2></div></div>"
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")

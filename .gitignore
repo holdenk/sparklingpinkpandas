@@ -132,3 +132,5 @@ dmypy.json
 db.sqlite3
 # zips
 *.zip
+# db config
+my.cnf
