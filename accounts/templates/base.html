@@ -11,18 +11,18 @@
     <link rel="shortcut icon" type="image/x-icon" href="/static/assets/img/logo.png">
 
     <!-- CSS here -->
-        <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/static/assets/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="/static/assets/css/flaticon.css">
-        <link rel="stylesheet" href="/static/assets/css/slicknav.css">
-        <link rel="stylesheet" href="/static/assets/css/animate.min.css">
-        <link rel="stylesheet" href="/static/assets/css/magnific-popup.css">\
-        <link rel="stylesheet" href="/static/assets/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="/static/assets/css/themify-icons.css">
-        <link rel="stylesheet" href="/static/assets/css/slick.css">
-        <link rel="stylesheet" href="/static/assets/css/nice-select.css">
-        <link rel="stylesheet" href="/static/assets/css/style.css">
-       
+	<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/assets/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="/static/assets/css/flaticon.css">
+	<link rel="stylesheet" href="/static/assets/css/slicknav.css">
+	<link rel="stylesheet" href="/static/assets/css/animate.min.css">
+	<link rel="stylesheet" href="/static/assets/css/magnific-popup.css">\
+	<link rel="stylesheet" href="/static/assets/css/fontawesome-all.min.css">
+	<link rel="stylesheet" href="/static/assets/css/themify-icons.css">
+	<link rel="stylesheet" href="/static/assets/css/slick.css">
+	<link rel="stylesheet" href="/static/assets/css/nice-select.css">
+	<link rel="stylesheet" href="/static/assets/css/style.css">
+
 	<link href="/static/01-homepage/css/styles.css" rel="stylesheet">
 
 	<link href="/static/01-homepage/css/responsive.css" rel="stylesheet">
@@ -45,7 +45,7 @@
 
 				<div class="src-area">
 					<form action="/blog/" method="POST">
-            {% csrf_token %}
+	    {% csrf_token %}
 						<input class="src-input" name="q" type="text" placeholder="Search" required>
 						<button class="src-btn" type="submit"><i class="fab fa-searchengin"></i></button>
 					</form>
@@ -62,7 +62,7 @@
 			</div><!-- right-area -->
 
 		</div><!-- top-menu -->
-		
+
 		<div class="middle-menu center-text"><a href="/" class="logo"><img src="/static/assets/img/logo.png" alt="Logo Image">
 			<h4 class="site-description" style=" font-size: 20px; color: black; width: 100%;">Sparkling<span style="color: rgb(240, 80, 255);"> Pink </span>Pandas</h4>
 		</a></div>
@@ -76,11 +76,11 @@
 				<li><a href="/events">EVENTS</a></li>
 				<li><a href="/blog">BLOG</a></li>
 				<li><a href="/gallery">GALLERY</a></li>
-        <li><a href="/accounts/about">About Us</a></li>
-        <li><a href="/accounts/contact">Contact</a></li>
+	<li><a href="/accounts/about">About Us</a></li>
+	<li><a href="/accounts/contact">Contact</a></li>
 				<li>{% if request.user.is_authenticated %}<a href="/accounts/logout"  >LOGOUT</a>
-                    {% else %}<a href="" data-toggle="modal"
-                    data-target="#loginModal" >LOGIN</a>{% endif %}</li>
+		    {% else %}<a href="" data-toggle="modal"
+		    data-target="#loginModal" >LOGIN</a>{% endif %}</li>
 			</ul><!-- main-menu -->
 
 		</div><!-- conatiner -->
@@ -90,176 +90,178 @@
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog " role="document">
-        <div class="modal-content">
-          <div class="modal-header newsletter-area">
-            <h2><span style="color:#000000;">Login</span>
-              <span style="color:rgb(255, 37, 164);">Form</span>
-            </h2>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body booking-form newsletter-area">
-            <div class="col-md-11 col-md-pull-7">
-              <div class="" style="width: 100%;">
+	<div class="modal-content">
+	  <div class="modal-header newsletter-area">
+	    <h2><span style="color:#000000;">Login</span>
+	      <span style="color:rgb(255, 37, 164);">Form</span>
+	    </h2>
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <span aria-hidden="true">&times;</span>
+	    </button>
+	  </div>
+	  <div class="modal-body booking-form newsletter-area">
+	    <div class="col-md-11 col-md-pull-7">
+	      <div class="" style="width: 100%;">
 
-                <form class="loginForm" method="POST">
-                  {% csrf_token %}
-                  <p id="errorl" style="color: red"></p>
-                  {% for field in login_form %}
-                  <p>
-                  <div class="checkout__form__input">
-                    <p>{{ field.label_tag }}<span>*</span></p>
-                    {% render_field field class="form-control" %}
-                  </div>
+		<form class="loginForm" method="POST">
+		  {% csrf_token %}
+		  <p id="errorl" style="color: red"></p>
+		  {% for field in login_form %}
+		  <p>
+		  <div class="checkout__form__input">
+		    <p>{{ field.label_tag }}<span>*</span></p>
+		    {% render_field field class="form-control" %}
+		  </div>
 
-                  {% endfor %}
-                  <br>
-                  <div class="form-btn">
-                    <button type="submit" class="btn btn-1"
-                      style="background-color: rgb(255, 37, 164); color: white;">Login</button>
-                  </div>
-                  <br>
-                  <a style="color:rgb(255, 37, 164)" data-dismiss="modal" data-toggle="modal" data-target="#signupModal"
-                    href="/accounts/signup">Don't have a Account? register here.</a>
-                  <input type="hidden" value="{{ request.GET.page }}" name="page">
-                </form>
-              </div>
-            </div>
-          </div>
+		  {% endfor %}
+		  <br>
+		  <div class="form-btn">
+		    <button type="submit" class="btn btn-1"
+		      style="background-color: rgb(255, 37, 164); color: white;">Login</button>
+		  </div>
+		  <br>
+		  <a style="color:rgb(255, 37, 164)" data-dismiss="modal" data-toggle="modal" data-target="#signupModal"
+		    href="/accounts/signup">Don't have a Account? register here.</a>
+		  <input type="hidden" value="{{ request.GET.page }}" name="page">
+		</form>
+	      </div>
+	    </div>
+	  </div>
 
-        </div>
+	</div>
       </div>
     </div>
     <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header newsletter-area">
-            <h2><span style="color:#1d1d1d;">Signup</span>
-              <span style="color:rgb(255, 37, 164)">Form</span>
-            </h2>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body booking-form newsletter-area">
-            <div class="col-md-11 col-md-pull-7">
-              <div class="" style="width: 100%;">
+	<div class="modal-content">
+	  <div class="modal-header newsletter-area">
+	    <h2><span style="color:#1d1d1d;">Signup</span>
+	      <span style="color:rgb(255, 37, 164)">Form</span>
+	    </h2>
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <span aria-hidden="true">&times;</span>
+	    </button>
+	  </div>
+	  <div class="modal-body booking-form newsletter-area">
+	    <div class="col-md-11 col-md-pull-7">
+	      <div class="" style="width: 100%;">
 
-                <p id="errors" style="color: rgb(255, 0, 149)"></p>
-                <form class="signupForm"  method="POST">
-                  {% csrf_token %}
-                  <p id="username" style="color: red"></p>
-                  <p id="email" style="color: red"></p>
-                  {% for field in signup_form %}
-                  <div class="checkout__form__input">
-                    <p>{{ field.label_tag }}<span>*</span></p>
-                    {% render_field field  class="form-control" %}
-                  </div>
-                  {% endfor %}
-                  
-                  <p id="password" style="color: red"></p>
-                  <br>
-                  <div class="form-btn">
-                    <button type="submit" class="btn btn-1"
-                      style="background-color: rgb(255, 57, 196); color: white;">Create Account</button>
-                  </div>
-                  <br>
-                  <a href="" style="color:#fd41be;" data-dismiss="modal" data-toggle="modal"
-                    data-target="#loginModal">Already have a Account? Login here.</a>
-                </form>
-              </div>
-            </div>
-          </div>
+		<p id="errors" style="color: rgb(255, 0, 149)"></p>
+		<form class="signupForm"  method="POST">
+		  {% csrf_token %}
+		  <p id="username" style="color: red"></p>
+		  <p id="email" style="color: red"></p>
+		  {% for field in signup_form %}
+		  <div class="checkout__form__input">
+		    <p>{{ field.label_tag }}<span>*</span></p>
+		    {% render_field field  class="form-control" %}
+		  </div>
+		  {% endfor %}
 
-        </div>
+		  <p id="password" style="color: red"></p>
+		  <br>
+		  <div class="form-btn">
+		    <button type="submit" class="btn btn-1"
+		      style="background-color: rgb(255, 57, 196); color: white;">Create Account</button>
+		  </div>
+		  <br>
+		  <a href="" style="color:#fd41be;" data-dismiss="modal" data-toggle="modal"
+		    data-target="#loginModal">Already have a Account? Login here.</a>
+		</form>
+	      </div>
+	    </div>
+	  </div>
+
+	</div>
       </div>
     </div>
 <footer >
     <!-- Footer Start-->
     <div class="footer-area footer-padding" style="background-color: rgb(20, 20, 20);">
-        <div class="container">
-            <div class="row d-flex justify-content-between" >
-                <div class="col-xl-4 col-lg-4 col-md-5 col-sm-6">
-                    <div class="single-footer-caption mb-50">
-                        <div class="single-footer-caption mb-30 text-center">
-                            <!-- logo -->
-                            <div class="footer-logo">
-                                <a href="index.html"><img src="/static/assets/img/logo.png" style="width: 100px;" alt=""></a>
-                            </div>
-                            <div class="footer-tittle" style="margin-top: -30px;">
-                                <div class="footer-pera" style="color: white;">
-                                    <p style="color: white;">Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-3 col-sm-5">
-                    <div class="single-footer-caption mb-50">
-                        <div class="footer-tittle">
-                            <h4 style="color: white;">Quick Links</h4>
-                            <ul >
-                                <li><a style="color: white;" href="/accounts/about">About</a></li>
-                                <br>
-                                <br>
-                                <li><a style="color: white;" href="/accounts/contact">  Contact Us</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-7">
-                    <div class="single-footer-caption mb-50 blog_right_sidebar " style="margin-top: -30px;">
-                        <aside class="single_sidebar_widget newsletter_widget" style="background-color: rgb(255, 86, 213);">
-                            <h4 class="widget_title" style="color: white;">Newsletter</h4>
+	<div class="container">
+	    <div class="row d-flex justify-content-between" >
+		<div class="col-xl-4 col-lg-4 col-md-5 col-sm-6">
+		    <div class="single-footer-caption mb-50">
+			<div class="single-footer-caption mb-30 text-center">
+			    <!-- logo -->
+			    <div class="footer-logo">
+				<a href="index.html"><img src="/static/assets/img/logo.png" style="width: 100px;" alt=""></a>
+			    </div>
+			    <div class="footer-tittle" style="margin-top: -30px;">
+				<div class="footer-pera" style="color: white;">
+				  <p style="color: white;">
+				    The Sparkling Pink Pandas is a trans-focused scooter and motorcycle group in San Francisco CA.
+				  </p>
+			    </div>
+			    </div>
+			</div>
+		    </div>
+		</div>
+		<div class="col-xl-4 col-lg-4 col-md-3 col-sm-5">
+		    <div class="single-footer-caption mb-50">
+			<div class="footer-tittle">
+			    <h4 style="color: white;">Quick Links</h4>
+			    <ul >
+				<li><a style="color: white;" href="/accounts/about">About</a></li>
+				<br>
+				<br>
+				<li><a style="color: white;" href="/accounts/contact">  Contact Us</a></li>
+			    </ul>
+			</div>
+		    </div>
+		</div>
+		<div class="col-xl-4 col-lg-4 col-md-4 col-sm-7">
+		    <div class="single-footer-caption mb-50 blog_right_sidebar " style="margin-top: -30px;">
+			<aside class="single_sidebar_widget newsletter_widget" style="background-color: rgb(255, 86, 213);">
+			    <h4 class="widget_title" style="color: white;">Newsletter</h4>
 
-                            <form class="form" method="POST">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <input type="email" id="email-input2" class="form-control" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
-                                </div>
-                                <button id="subscribe" class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                    type="submit">Subscribe</button>
-                            </form>
-                        </aside>
-                    </div>
-                </div>
-                
-            </div>
-            <!-- Footer bottom -->
-            <div class="row align-items-center">
-                <div class="col-xl-7 col-lg-8 col-md-7">
-                    <div class="footer-copy-right">
-                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Design is made with <i class="fa fa-heart" aria-hidden="true"></i> 
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>                  
-                    </div>
-                </div>
-                <div class="col-xl-5 col-lg-4 col-md-5">
-                    <div class="footer-copy-right f-right">
-                        <!-- social -->
-                        <div class="footer-social">
-                          <a href="#"><i class="fab fa-twitter"></i></a>
-                          <a href="https://www.facebook.com/SparklingPinkPandas/?_rdc=1&_rdr"><i class="fab fa-facebook-f"></i></a>
-                          <a href="https://www.youtube.com/channel/UCP71aXbyq56Ynquxq3Gfovw"><i class="fab fa-youtube"></i></a>
-                          <a href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+			    <form class="form" method="POST">
+				{% csrf_token %}
+				<div class="form-group">
+				    <input type="email" id="email-input2" class="form-control" onfocus="this.placeholder = ''"
+					onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+				</div>
+				<button id="subscribe" class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+				    type="submit">Subscribe</button>
+			    </form>
+			</aside>
+		    </div>
+		</div>
+
+	    </div>
+	    <!-- Footer bottom -->
+	    <div class="row align-items-center">
+		<div class="col-xl-7 col-lg-8 col-md-7">
+		    <div class="footer-copy-right">
+			<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Design is made with <i class="fa fa-heart" aria-hidden="true"></i>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+		    </div>
+		</div>
+		<div class="col-xl-5 col-lg-4 col-md-5">
+		    <div class="footer-copy-right f-right">
+			<!-- social -->
+			<div class="footer-social">
+			  <a href="#"><i class="fab fa-twitter"></i></a>
+			  <a href="https://www.facebook.com/SparklingPinkPandas/?_rdc=1&_rdr"><i class="fab fa-facebook-f"></i></a>
+			  <a href="https://www.youtube.com/channel/UCP71aXbyq56Ynquxq3Gfovw"><i class="fab fa-youtube"></i></a>
+			  <a href="#"><i class="fab fa-instagram"></i></a>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	</div>
     </div>
     <!-- Footer End-->
 </footer>
 <!--? Search model Begin -->
 <div class="search-model-box">
     <div class="h-100 d-flex align-items-center justify-content-center">
-        <div class="search-close-btn">+</div>
-        <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Searching key.....">
-        </form>
+	<div class="search-close-btn">+</div>
+	<form class="search-model-form">
+	    <input type="text" id="search-input" placeholder="Searching key.....">
+	</form>
     </div>
 </div>
 <!-- Search model end -->
@@ -295,7 +297,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="/static/assets/js/mail-script.js"></script>
 <script src="/static/assets/js/jquery.ajaxchimp.min.js"></script>
 
-<!-- Jquery Plugins, main Jquery -->	
+<!-- Jquery Plugins, main Jquery -->
 <script src="/static/assets/js/plugins.js"></script>
 <script src="/static/assets/js/main.js"></script>
 <script src="/static/common-js/jquery-3.1.1.min.js"></script>
@@ -320,12 +322,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   $.ajax({
       url: '/accounts/subscribe',
       data: {
-          'email': email.value,
+	  'email': email.value,
       },
       dataType: 'json',
       success: function (data) {
-          email.value = '';
-          alert("subscribed successfully");
+	  email.value = '';
+	  alert("subscribed successfully");
       }
   });
 });
