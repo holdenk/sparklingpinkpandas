@@ -1,4 +1,4 @@
-django==3.1
+django==4.2
 django-ckeditor
 django-widget-tweaks
 Pillow
